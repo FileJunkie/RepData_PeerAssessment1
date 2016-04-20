@@ -13,9 +13,16 @@ con <- unz("activity.zip", "activity.csv")
 data <- read.csv(con)
 ```
 
-
 ## What is mean total number of steps taken per day?
 
+```{r, echo=TRUE}
+stepsByDay <- aggregate(steps ~ date, data, sum)
+
+hist(stepsByDay$steps, xlab="Steps")
+
+sprintf("Mean amount of steps: %.2f", mean(stepsByDay$steps))
+sprintf("Median amount of steps: %d", median(stepsByDay$steps))
+```
 
 
 ## What is the average daily activity pattern?
