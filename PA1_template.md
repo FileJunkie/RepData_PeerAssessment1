@@ -40,6 +40,24 @@ sprintf("Median amount of steps: %d", median(stepsByDay$steps))
 ## What is the average daily activity pattern?
 
 
+```r
+stepsByInterval <- aggregate(steps ~ interval, data, mean)
+
+plot(stepsByInterval$interval, stepsByInterval$steps, type="l", xlab="Interval", ylab="Steps", main="Steps by 5-minutes interval, averaged across all days")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)
+
+```r
+maxNumberOfSteps <- max(stepsByInterval$steps)
+
+sprintf("Interval %d contains maximum number of steps: %.2f", with(stepsByInterval, subset(interval, steps==maxNumberOfSteps)), maxNumberOfSteps)
+```
+
+```
+## [1] "Interval 835 contains maximum number of steps: 206.17"
+```
+
 
 ## Imputing missing values
 
