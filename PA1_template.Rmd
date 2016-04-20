@@ -18,7 +18,7 @@ data <- read.csv(con)
 ```{r, echo=TRUE}
 stepsByDay <- aggregate(steps ~ date, data, sum)
 
-hist(stepsByDay$steps, xlab="Steps")
+hist(stepsByDay$steps, xlab="Steps", main="Steps by day")
 
 sprintf("Mean amount of steps: %.2f", mean(stepsByDay$steps))
 sprintf("Median amount of steps: %d", median(stepsByDay$steps))

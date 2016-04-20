@@ -15,7 +15,7 @@ data <- read.csv(con)
 ```r
 stepsByDay <- aggregate(steps ~ date, data, sum)
 
-hist(stepsByDay$steps, xlab="Steps")
+hist(stepsByDay$steps, xlab="Steps", main="Steps by day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)
