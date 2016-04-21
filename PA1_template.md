@@ -104,3 +104,23 @@ sprintf("Median amount of steps (NAs replaced): %d", median(stepsByDayNoNAs$step
 As the result of substituting the missing data with the rounded mean values of the intervals, the mean and median daily amount of steps went slightly down, though by less then 0.1%.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+```r
+data <- transform(data, weekend = factor(as.POSIXlt(date)$wday %in% c(0,6), labels=c("Weekday","Weekend")))
+
+splitData <- lapply(split(data, data$weekend), function(chunk){aggregate(steps ~ interval, chunk, mean)})
+
+weekdayData <- splitData$Weekday
+weekendData <- splitData$Weekend
+
+weekdayData$weekday="weekday"
+weekendData$weekday="weekend"
+
+stepsBydayWithWeekends <- rbind(weekdayData, weekendData)
+
+library(lattice)
+xyplot(steps ~ interval | weekday, stepsBydayWithWeekends, type="l", layout=c(1,2))
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)
