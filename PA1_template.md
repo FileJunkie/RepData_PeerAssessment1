@@ -13,7 +13,7 @@ data <- read.csv(con)
 
 
 ```r
-stepsByDay <- aggregate(steps ~ date, data, sum)
+stepsByDay <- aggregate(steps ~ date, data, sum, na.rm=TRUE, na.action=NULL)
 
 hist(stepsByDay$steps, xlab="Steps", main="Steps by day")
 ```
@@ -25,7 +25,7 @@ sprintf("Mean amount of steps: %.2f", mean(stepsByDay$steps))
 ```
 
 ```
-## [1] "Mean amount of steps: 10766.19"
+## [1] "Mean amount of steps: 9354.23"
 ```
 
 ```r
@@ -33,7 +33,7 @@ sprintf("Median amount of steps: %d", median(stepsByDay$steps))
 ```
 
 ```
-## [1] "Median amount of steps: 10765"
+## [1] "Median amount of steps: 10395"
 ```
 
 
@@ -101,7 +101,7 @@ sprintf("Median amount of steps (NAs replaced): %d", median(stepsByDayNoNAs$step
 ## [1] "Median amount of steps (NAs replaced): 10762"
 ```
 
-As the result of substituting the missing data with the rounded mean values of the intervals, the mean and median daily amount of steps went slightly down, though by less then 0.1%.
+As the result of substituting the missing data with the rounded mean values of the intervals, the mean and median daily amount of steps went noticeably higher, which is understable as in the original data data for some days is simply missing.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
