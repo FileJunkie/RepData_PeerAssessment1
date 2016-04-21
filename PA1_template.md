@@ -62,5 +62,45 @@ sprintf("Interval %d contains maximum number of steps: %.2f", with(stepsByInterv
 ## Imputing missing values
 
 
+```r
+sprintf("%d values are missing from the data set", sum(is.na(data$steps)))
+```
+
+```
+## [1] "2304 values are missing from the data set"
+```
+
+Let us use the rounded mean value for the current interval as a substitute for missing data.
+
+
+```r
+dataJoined <- merge(data, stepsByInterval, by="interval")
+
+dataNoNAs <- within(dataJoined, steps <- ifelse(is.na(steps.x), round(steps.y), steps.x))
+
+stepsByDayNoNAs <- aggregate(steps ~ date, dataNoNAs, sum)
+
+hist(stepsByDayNoNAs$steps, xlab="Steps", main="Steps by day (NAs replaced)")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)
+
+```r
+sprintf("Mean amount of steps (NAs replaced): %.2f", mean(stepsByDayNoNAs$steps))
+```
+
+```
+## [1] "Mean amount of steps (NAs replaced): 10765.64"
+```
+
+```r
+sprintf("Median amount of steps (NAs replaced): %d", median(stepsByDayNoNAs$steps))
+```
+
+```
+## [1] "Median amount of steps (NAs replaced): 10762"
+```
+
+As the result of substituting the missing data with the rounded mean values of the intervals, the mean and median daily amount of steps went slightly down, though by less then 0.1%.
 
 ## Are there differences in activity patterns between weekdays and weekends?
